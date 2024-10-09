@@ -31,6 +31,7 @@ app.get('/',(req,res)=>{
   res.status(200);
 })
 // Endpoint
+
 app.post('/getParticipant', (req, res) => {
   const { id, scanType } = req.body;
   
@@ -52,12 +53,31 @@ app.post('/getParticipant', (req, res) => {
     }
     
     if (results.length > 0) {
-      res.json(results[0]);
+      const attendee = results[0];
+      
+      // Fetch participated events for the attendee
+      const eventsQuery = `
+        SELECT e.EventName, e.EventType, e.EventTier, e.EventPrice, p.attended
+        FROM participating p
+        JOIN events e ON p.EventID = e.EventID
+        WHERE p.UserID = ?;
+      `;
+      connection.query(eventsQuery, [attendee.UID], (eventErr, eventResults) => {
+        if (eventErr) {
+          console.error('Error fetching participated events:', eventErr);
+          res.status(500).json({ error: 'An error occurred while fetching participated events.' });
+          return;
+        }
+        
+        attendee.participatedEvents = eventResults;
+        res.json(attendee);
+      });
     } else {
       res.status(404).json({ message: 'Participant not found.' });
     }
   });
 });
+
 const port = process.env.PORT || 3000; // Fallback for local development
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
