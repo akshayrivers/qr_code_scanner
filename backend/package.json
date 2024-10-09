@@ -1,4 +1,12 @@
 {
+  "name": "qr_code_scanner",
+  "version": "1.0.0",
+  "description": "QR Code Scanner API",
+  "main": "api/server.js",
+  "scripts": {
+    "start": "node api/server.js",
+    "build": "echo 'No build step necessary'"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
