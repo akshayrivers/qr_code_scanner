@@ -59,6 +59,9 @@ app.post('/getParticipant', (req, res) => {
     }
   });
 });
-
+const port = process.env.PORT || 3000; // Fallback for local development
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
 // Export the handler
 module.exports = serverless(app);
