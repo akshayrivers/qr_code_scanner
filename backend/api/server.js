@@ -5,7 +5,6 @@ const cors = require('cors');
 const serverless = require('serverless-http');
 require('dotenv').config();
 const app = express();
-port=3000
 // Middleware
 app.use(cors());
 app.use(express.json());
