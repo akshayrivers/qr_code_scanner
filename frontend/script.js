@@ -106,7 +106,7 @@ async function handleBarcode(result) {
 
 async function fetchAttendeeData(id, scanType) {
     try {
-        const response = await fetch('http://localhost:3000/getParticipant', {
+        const response = await fetch('https://backend-5b1y.onrender.com/getParticipant', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
