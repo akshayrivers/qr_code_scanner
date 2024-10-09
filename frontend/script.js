@@ -144,16 +144,37 @@ function displayResult(type, data) {
 }
 
 function displayAttendeeInfo(data) {
+    let eventsHtml = '';
+    if (data.participatedEvents && data.participatedEvents.length > 0) {
+        eventsHtml = `
+            <strong>Registered Events:</strong><br>
+            <ul class="event-list">
+                ${data.participatedEvents.map(event => `
+                    <li>${event.EventName}</li>
+                `).join('')}
+            </ul>
+        `;
+    } else {
+        eventsHtml = '<strong>Registered Events:</strong> None<br>';
+    }
+
     result.innerHTML = `
-        <strong>FullName:</strong> ${data.FirstName} ${data.LastName} <br>
-        <strong>Email:</strong> ${data.Email} <br>
-        <strong>Phone:</strong> ${data.ContactNumber} <br>
-        <strong>BandID:</strong> ${data.BandID} <br>
-        <strong>UID:</strong> ${data.UID} <br>
+        <div class="attendee-info">
+            <h2>${data.FirstName} ${data.LastName}</h2>
+            <p><strong>Email:</strong> ${data.Email}</p>
+            <p><strong>Phone:</strong> ${data.ContactNumber}</p>
+            <p><strong>Institute:</strong> ${data.InstituteName}</p>
+            <p><strong>State:</strong> ${data.State}</p>
+            <p><strong>BandID:</strong> ${data.BandID}</p>
+            <p><strong>UID:</strong> ${data.UID}</p>
+        </div>
+        <div class="events-info">
+            ${eventsHtml}
+        </div>
     `;
     result.classList.add('success');
 
     setTimeout(() => {
         result.classList.remove('success');
-    }, 3000);
+    }, 5000);
 }
