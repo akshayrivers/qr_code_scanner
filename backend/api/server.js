@@ -59,8 +59,6 @@ app.post('/getParticipant', (req, res) => {
     }
   });
 });
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+
 // Export the handler
-module.exports.handler = serverless(app);
+module.exports = serverless(app);
